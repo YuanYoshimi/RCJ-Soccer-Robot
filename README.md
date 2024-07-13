@@ -1,3 +1,8 @@
+## NEW REPO 
+https://github.com/2024-Robocup-Soccer/Andys-Geese-2024
+
+
+
 [![Documentation Status](https://readthedocs.org/projects/andys-geese-2024/badge/?version=latest)](https://andys-geese-2024.readthedocs.io/en/latest/?badge=latest)
 ![Commits](https://badgen.net/github/commits/YuanYoshimi/RCJ-Soccer-Robot)
 [![C/C++ CI](https://github.com/YuanYoshimi/RCJ-Soccer-Robot/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/YuanYoshimi/RCJ-Soccer-Robot/actions/workflows/c-cpp.yml)
