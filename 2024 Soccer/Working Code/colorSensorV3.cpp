@@ -181,13 +181,9 @@ void ColorSensor::fillMedians() {
 void ColorSensor::analyzeSensorValues() {
     for (int i = 0; i < 16; i++) {
         sensorValues[i] = readSensor(i);
-        if(sensorValues[i] < greenValues[i].getAverage() * percentageIncrease) {
-            greenValues[i].add(sensorValues[i]);
-        }
-        else {
-            Serial.print("bad ");
-        }
-        Serial.print(greenValues[i].getAverage());
+        if(sensorValues[i] < greenValues[i].getMedian() * percentageIncrease) greenValues[i].add(sensorValues[i]);
+        else Serial.print("bad ");
+        Serial.print(greenValues[i].getMedian());
         Serial.print(" ");
         Serial.print(sensorValues[i]);
         Serial.print(" ");
@@ -200,28 +196,13 @@ float ColorSensor::calculateDirection() {
 
     float sumCos = 0;
     float sumSin = 0;
-    int activeSensors = 0;
-
-    for (int i = 0; i < 16; i++) {
-        if (sensorValues[i] > greenValues[i].getMedian()) {
-            float angle = ((2 * PI) / 16) * i;
-            sumCos += cos(angle);
-            sumSin += sin(angle);
-            activeSensors++;
-        }
+    for(int i = 0; i < 16; i++) {
+        sumCos += cos(sensorValues[i] * (((2 * PI) / 16) * i));
+        sumSin += sin(sensorValues[i] * (((2 * PI) / 16) * i));
     }
 
-    if (activeSensors == 0) {
-        // No line detected
-        return -1; // or some invalid value to indicate no detection
-    }
-
-    float avgCos = sumCos / activeSensors;
-    float avgSin = sumSin / activeSensors;
-
-    return atan2(avgSin, avgCos);
+    return atan2(sumCos / 16, sumSin / 16);
 }
-
 
 void ColorSensor::visualize(){
     analyzeSensorValues();
